@@ -431,7 +431,7 @@ Transform:
   m_GameObject: {fileID: 839099533}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 12.582788, y: -0.25560224, z: -0.0045003276}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -452,8 +452,7 @@ MonoBehaviour:
   _localStep: 0.00001
   _wavePatterns:
   - {fileID: 11400000, guid: c71984c9d1c64d8409434106af2c13ee, type: 2}
-  _areaPointOne: {x: -9, y: -5}
-  _areaPointTwo: {x: 9, y: 5}
+  _areaPoints: []
 --- !u!1 &946154880
 GameObject:
   m_ObjectHideFlags: 0
