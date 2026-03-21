@@ -263,8 +263,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3d2fdd5f05c6574b98a284347b923c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotateImmediately: 1
-  rotationSpeed: 5
   RotationComponent: {fileID: 984078718}
 --- !u!1 &573980776
 GameObject:
