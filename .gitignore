@@ -97,3 +97,25 @@ InitTestScene*.unity*
 
 # Auto-generated scenes by play mode tests
 /[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
+
+# ===========================================
+# Unity Version Files (игнорируем версию движка)
+# ===========================================
+
+# Project version - разные версии Unity создают разные файлы
+/ProjectSettings/ProjectVersion.txt
+
+# VS Code / Rider / Visual Studio файлы с версиями
+/.vsconfig
+/.vscode/extensions.json
+
+# Solution и project files (пересоздаются при открытии)
+*.csproj
+*.sln
+*.userprefs
+
+# Assembly definition кэш
+*.asmdef.meta
+*.asmdef
+
+
