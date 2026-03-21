@@ -20,6 +20,15 @@ public class GunConponent : MonoBehaviour
         GlodalInputs.GetInput().Player.Attack.canceled += i => inHandsGun?.StopAtack();
 
     }
+    public MasterGun GetGun()
+    {
+        return inHandsGun;
+    }
+    public Transform GetGunParent()
+    {
+        return parentGun;
+    }
+
     public void SetGun(MasterGun gun)
     {
         Destroy(inHandsGun);

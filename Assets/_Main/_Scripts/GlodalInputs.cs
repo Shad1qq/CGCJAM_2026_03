@@ -18,5 +18,10 @@ public static class GlodalInputs
     {
         return _actions;
     }
+    public static void Remove()
+    {
+        _actions.Disable();
+        _actions = null;
+    }
 
 }

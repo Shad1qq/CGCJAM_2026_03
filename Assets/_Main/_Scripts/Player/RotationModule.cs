@@ -9,10 +9,14 @@ public class RotationModule : MonoBehaviour, IModule
 
     [Header("Rotation Value")]
     [SerializeField] private Transform RotationComponent;
+    [SerializeField] private SpriteRenderer PlayerLeftRight;
+
+    private GunConponent gunC;
 
     void Start()
     {
         mainCamera = Camera.main;
+        gunC = GetComponent<GunConponent>();
     }
 
     void FixedUpdate()
@@ -24,8 +28,20 @@ public class RotationModule : MonoBehaviour, IModule
 
         Vector2 direction = (mouseWorldPosition - RotationComponent.position).normalized;
 
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        RotationComponent.rotation = Quaternion.Euler(0, 0, angle);
+        bool cursorOnLeft = mouseWorldPosition.x < transform.position.x;
+
+        float baseAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+
+        float finalAngle = baseAngle;
+
+        if (cursorOnLeft)
+            finalAngle = -baseAngle + 180;
+
+        Vector3 currentRotation = RotationComponent.eulerAngles;
+
+        float angleY = cursorOnLeft ? 180f : 0f;
+
+        RotationComponent.rotation = Quaternion.Euler(currentRotation.x, angleY, finalAngle);
     }
     public void Disable()
     {

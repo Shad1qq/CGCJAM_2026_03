@@ -35,4 +35,8 @@ public class MovementModule : MonoBehaviour, IModule
     {
         this.Enable();
     }
+    void OnDestroy()
+    {
+        GlodalInputs.Remove();
+    }
 }
