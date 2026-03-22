@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: WavePattern
   m_EditorClassIdentifier: 
   NumberOfEnemies: 5
+  Enemies: []
