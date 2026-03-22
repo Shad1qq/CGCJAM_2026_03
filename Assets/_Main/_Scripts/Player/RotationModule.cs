@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -35,7 +36,12 @@ public class RotationModule : MonoBehaviour, IModule
         float finalAngle = baseAngle;
 
         if (cursorOnLeft)
+        {
+            PlayerLeftRight.flipX = true;
             finalAngle = -baseAngle + 180;
+        }
+        else
+            PlayerLeftRight.flipX = false;
 
         Vector3 currentRotation = RotationComponent.eulerAngles;
 
