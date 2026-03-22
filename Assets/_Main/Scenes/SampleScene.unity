@@ -450,9 +450,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _localStep: 0.00001
+  _durationToNextWave: 5
   _wavePatterns:
   - {fileID: 11400000, guid: c71984c9d1c64d8409434106af2c13ee, type: 2}
-  _areaPoints: []
+  _areaPoints:
+  - {fileID: 839099534}
+  - {fileID: 839099534}
 --- !u!1 &946154880
 GameObject:
   m_ObjectHideFlags: 0
