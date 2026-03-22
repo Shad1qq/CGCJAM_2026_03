@@ -456,6 +456,7 @@ MonoBehaviour:
   _areaPoints:
   - {fileID: 839099534}
   - {fileID: 839099534}
+  _enemyInWave: []
 --- !u!1 &946154880
 GameObject:
   m_ObjectHideFlags: 0

@@ -13,3 +13,5 @@ MonoBehaviour:
   m_Name: WavePattern
   m_EditorClassIdentifier: 
   NumberOfEnemies: 5
+  Enemies:
+  - {fileID: 3039297760010690626, guid: b768db764033daa4683d9c0f5107beed, type: 3}

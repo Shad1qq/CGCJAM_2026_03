@@ -5,17 +5,19 @@ using UnityEngine.Serialization;
 
 public class WaveManager : MonoBehaviour
 {
-   [Header("Wave Settings")]
+   [Header("Wave Settings")] [Space]
    [SerializeField]private double _localStep = 0.00001;
    [SerializeField]private int _durationToNextWave = 5;
    
+   [Header("Wave Patterns")] [Space]
    [SerializeField]private List<WavePattern> _wavePatterns = new List<WavePattern>();
    [SerializeField]private Transform[] _areaPoints;
+   [SerializeField]private List<GameObject> _enemyInWave = new List<GameObject>();
    
    private double _localDifficulty = 1.00;
    private WaveSpawner _waveSpawner;
-
-   private int CountOfEnemiesInWave = 0;
+   private bool _waveInProgress = false;
+   
 
    public void ResetLocalDifficulty() => _localDifficulty = 1.00;
    
@@ -26,23 +28,30 @@ public class WaveManager : MonoBehaviour
 
    private async UniTask NextWave()
    {
+      _waveInProgress = true;
       WavePattern pattern = _wavePatterns[Random.Range(0, _wavePatterns.Count - 1)];
-      CountOfEnemiesInWave = pattern.NumberOfEnemies;
+      int numberOfEnemies = pattern.NumberOfEnemies;
 
       await UniTask.WaitForSeconds(_durationToNextWave);
       
-      Debug.Log(CountOfEnemiesInWave + " Spawned");
+      Debug.Log(_enemyInWave + " Spawned");
+      for (int i = 0; i < numberOfEnemies; i++)
+      {
+         GameObject enemy = await _waveSpawner.SpawnEnemy(_areaPoints, pattern.Enemies);
+         
+         _enemyInWave?.Add(enemy);
+         await UniTask.WaitForSeconds(1f);
+      }
       
-      _waveSpawner.SpawnEnemies(CountOfEnemiesInWave, _areaPoints, pattern.Enemies);
+      _waveInProgress = false;
    }
    
-   private async void Update()
+   private void Update()
    {
       _localDifficulty += _localStep;
-      if (CountOfEnemiesInWave <= 0)
+      if (_enemyInWave.Count <= 0 && !_waveInProgress)
       { 
-         Debug.Log("Use");
-         await NextWave();
+         NextWave().Forget();
       }
    }
 }
