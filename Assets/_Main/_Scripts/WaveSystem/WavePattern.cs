@@ -4,5 +4,6 @@
 public class WavePattern : ScriptableObject
 {
     public int NumberOfEnemies;
+    public GameObject[] Enemies;
     
 }
