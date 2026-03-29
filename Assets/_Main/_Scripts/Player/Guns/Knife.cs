@@ -1,19 +1,22 @@
 using UnityEngine;
 
-public class Knife : MasterGun
+namespace _Main._Scripts.Player.Guns
 {
-    [Header("Components")]
-    [SerializeField] private Animator anim;
-
-    public override void Atack()
+    public class Knife : MasterGun
     {
-        anim.SetBool(boolAtackTriger, true);
+        [Header("Components")]
+        [SerializeField] private Animator anim;
+
+        public override void Attack()
+        {
+            anim.SetBool(boolAtackTriger, true);
+
+        }
+        public override void StopAttack()
+        {
+            anim.SetBool(boolAtackTriger, false);
+
+        }
 
     }
-    public override void StopAtack()
-    {
-        anim.SetBool(boolAtackTriger, false);
-
-    }
-
 }

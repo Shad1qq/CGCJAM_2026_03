@@ -1,9 +1,13 @@
-﻿using UnityEngine;
+﻿using _Main._Scripts.Enemyl;
+using UnityEngine;
 
-[CreateAssetMenu(fileName =  "WavePattern", menuName = "CreatePattern/WavePattern")]
-public class WavePattern : ScriptableObject
+namespace _Main._Scripts.WaveSystem
 {
-    public int NumberOfEnemies;
-    public GameObject[] Enemies;
+    [CreateAssetMenu(fileName =  "WavePattern", menuName = "CreatePattern/WavePattern")]
+    public class WavePattern : ScriptableObject
+    {
+        public int NumberOfEnemies;
+        public EnemyConfig[] Enemies;
     
+    }
 }

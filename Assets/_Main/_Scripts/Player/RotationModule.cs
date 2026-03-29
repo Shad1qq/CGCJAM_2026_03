@@ -1,62 +1,64 @@
-using System.Linq.Expressions;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class RotationModule : MonoBehaviour, IModule
+namespace _Main._Scripts.Player
 {
-    private Vector2 lastMousePosition;
-
-    private Camera mainCamera;
-
-    [Header("Rotation Value")]
-    [SerializeField] private Transform RotationComponent;
-    [SerializeField] private SpriteRenderer PlayerLeftRight;
-
-    private GunConponent gunC;
-
-    void Start()
+    public class RotationModule : MonoBehaviour, IModule
     {
-        mainCamera = Camera.main;
-        gunC = GetComponent<GunConponent>();
-    }
+        private Vector2 lastMousePosition;
 
-    void FixedUpdate()
-    {
-        lastMousePosition = Mouse.current.position.ReadValue();
+        private Camera mainCamera;
 
-        Vector3 mouseWorldPosition = mainCamera.ScreenToWorldPoint(new Vector3(lastMousePosition.x, lastMousePosition.y, 0));
-        mouseWorldPosition.z = 0;
+        [Header("Rotation Value")]
+        [SerializeField] private Transform RotationComponent;
+        [SerializeField] private SpriteRenderer PlayerLeftRight;
 
-        Vector2 direction = (mouseWorldPosition - RotationComponent.position).normalized;
+        private GunConponent gunC;
 
-        bool cursorOnLeft = mouseWorldPosition.x < transform.position.x;
-
-        float baseAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-
-        float finalAngle = baseAngle;
-
-        if (cursorOnLeft)
+        void Start()
         {
-            PlayerLeftRight.flipX = true;
-            finalAngle = -baseAngle + 180;
+            mainCamera = Camera.main;
+            gunC = GetComponent<GunConponent>();
         }
-        else
-            PlayerLeftRight.flipX = false;
 
-        Vector3 currentRotation = RotationComponent.eulerAngles;
+        void FixedUpdate()
+        {
+            lastMousePosition = Mouse.current.position.ReadValue();
 
-        float angleY = cursorOnLeft ? 180f : 0f;
+            Vector3 mouseWorldPosition = mainCamera.ScreenToWorldPoint(new Vector3(lastMousePosition.x, lastMousePosition.y, 0));
+            mouseWorldPosition.z = 0;
 
-        RotationComponent.rotation = Quaternion.Euler(currentRotation.x, angleY, finalAngle);
+            Vector2 direction = (mouseWorldPosition - RotationComponent.position).normalized;
+
+            bool cursorOnLeft = mouseWorldPosition.x < transform.position.x;
+
+            float baseAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+
+            float finalAngle = baseAngle;
+
+            if (cursorOnLeft)
+            {
+                PlayerLeftRight.flipX = true;
+                finalAngle = -baseAngle + 180;
+            }
+            else
+                PlayerLeftRight.flipX = false;
+
+            Vector3 currentRotation = RotationComponent.eulerAngles;
+
+            float angleY = cursorOnLeft ? 180f : 0f;
+
+            RotationComponent.rotation = Quaternion.Euler(currentRotation.x, angleY, finalAngle);
+        }
+        public void Disable()
+        {
+            this.Disable();
+        }
+
+        public void Enable()
+        {
+            this.Enable();
+        }
+
     }
-    public void Disable()
-    {
-        this.Disable();
-    }
-
-    public void Enable()
-    {
-        this.Enable();
-    }
-
 }

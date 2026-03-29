@@ -1,5 +1,8 @@
-﻿public interface IModule
+﻿namespace _Main._Scripts
 {
-    public void Disable();
-    public void Enable();
+    public interface IModule
+    {
+        public void Disable();
+        public void Enable();
+    }
 }

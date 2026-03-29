@@ -1,57 +1,77 @@
+using System;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-public class WaveManager : MonoBehaviour
+namespace _Main._Scripts.WaveSystem
 {
-   [Header("Wave Settings")] [Space]
-   [SerializeField]private double _localStep = 0.00001;
-   [SerializeField]private int _durationToNextWave = 5;
-   
-   [Header("Wave Patterns")] [Space]
-   [SerializeField]private List<WavePattern> _wavePatterns = new List<WavePattern>();
-   [SerializeField]private Transform[] _areaPoints;
-   [SerializeField]private List<GameObject> _enemyInWave = new List<GameObject>();
-   
-   private double _localDifficulty = 1.00;
-   private WaveSpawner _waveSpawner;
-   private bool _waveInProgress = false;
-   
-
-   public void ResetLocalDifficulty() => _localDifficulty = 1.00;
-   
-   private void Start()
+   public class WaveManager : MonoBehaviour
    {
-      _waveSpawner = new WaveSpawner();
-   }
+        private static Action EnemyDestroyed; 
 
-   private async UniTask NextWave()
-   {
-      _waveInProgress = true;
-      WavePattern pattern = _wavePatterns[Random.Range(0, _wavePatterns.Count - 1)];
-      int numberOfEnemies = pattern.NumberOfEnemies;
+        [Header("Wave Settings")] [Space]
+        [SerializeField]private double _localStep = 0.00001;
+        [SerializeField]private int _durationToNextWave = 5;
+   
+        [Header("Wave Patterns")] [Space]
+        [SerializeField]private GameObject _prefab;
+        [SerializeField]private List<WavePattern> _wavePatterns = new List<WavePattern>();
+        [SerializeField]private Transform[] _areaPoints;
+        [SerializeField]private List<GameObject> _enemyInWave = new List<GameObject>();
+   
+        private double _localDifficulty = 1.00;
+        private WaveSpawner _waveSpawner;
+        private bool _wavespawnInProgress = false;
+   
 
-      await UniTask.WaitForSeconds(_durationToNextWave);
+        public void ResetLocalDifficulty() => _localDifficulty = 1.00;
+        public static void EnemyDestroyedInvoke() => EnemyDestroyed?.Invoke();
+   
+        private void Start()
+        {
+            DontDestroyOnLoad(gameObject);
+            _waveSpawner = new WaveSpawner();
+            EnemyDestroyed += DeleteNullEnemyInWave;
+        }
+
+        private async UniTask NextWave()
+        {
+            _wavespawnInProgress = true;
+            UnityEngine.Random.InitState((int)Time.time);
+
+            WavePattern pattern = _wavePatterns[UnityEngine.Random.Range(0, _wavePatterns.Count - 1)];
+            int numberOfEnemies = pattern.NumberOfEnemies;
+
+            Debug.Log(pattern.NumberOfEnemies);
+
+            await UniTask.WaitForSeconds(_durationToNextWave);
       
-      Debug.Log(_enemyInWave + " Spawned");
-      for (int i = 0; i < numberOfEnemies; i++)
-      {
-         GameObject enemy = await _waveSpawner.SpawnEnemy(_areaPoints, pattern.Enemies);
+            for (int i = 0; i < numberOfEnemies; i++)
+            {
+                Enemyl.Enemy enemy = await _waveSpawner.SpawnEnemy(_areaPoints, _prefab);
          
-         _enemyInWave?.Add(enemy);
-         await UniTask.WaitForSeconds(1f);
-      }
+                enemy.Init(pattern.Enemies[UnityEngine.Random.Range(0, pattern.Enemies.Length - 1)]);
+         
+                _enemyInWave?.Add(enemy.gameObject);
+                await UniTask.WaitForSeconds(1f);
+            }
       
-      _waveInProgress = false;
-   }
+            _wavespawnInProgress = false;
+        }
    
-   private void Update()
-   {
-      _localDifficulty += _localStep;
-      if (_enemyInWave.Count <= 0 && !_waveInProgress)
-      { 
-         NextWave().Forget();
-      }
+        private void Update()
+        {
+            _localDifficulty += _localStep;
+
+            //if(Time.frameCount % 60 == 0) DeleteNullEnemyInWave();
+
+            if (_enemyInWave.Count <= 0 && !_wavespawnInProgress)
+                NextWave().Forget();
+         
+        }
+        public void DeleteNullEnemyInWave()
+        {
+            _enemyInWave.RemoveAll(enemy => enemy == null || !enemy.gameObject.activeInHierarchy);
+        }
    }
 }

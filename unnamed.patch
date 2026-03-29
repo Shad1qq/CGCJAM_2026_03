@@ -1,0 +1,18 @@
+Index: Assets/_Main/WavePatterns/WavePattern.asset
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Assets/_Main/WavePatterns/WavePattern.asset b/Assets/_Main/WavePatterns/WavePattern.asset
+--- a/Assets/_Main/WavePatterns/WavePattern.asset	(revision b92f127d41e0d7ef58f65a9628e48c78d8a5907f)
++++ b/Assets/_Main/WavePatterns/WavePattern.asset	(revision 624f419cb6467f390c53b4c082c718ab865402e6)
+@@ -13,5 +13,9 @@
+   m_Name: WavePattern
+   m_EditorClassIdentifier: 
+   NumberOfEnemies: 5
++<<<<<<< HEAD
+   Enemies:
+   - {fileID: 3039297760010690626, guid: b768db764033daa4683d9c0f5107beed, type: 3}
++=======
++  Enemies: []
++>>>>>>> c9c62638b82b9d6b6982aca492a8859078357b21

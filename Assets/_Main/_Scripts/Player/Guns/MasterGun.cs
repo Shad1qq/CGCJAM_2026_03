@@ -1,16 +1,19 @@
 using UnityEngine;
 
-public class MasterGun : MonoBehaviour
+namespace _Main._Scripts.Player.Guns
 {
-    protected string boolAtackTriger = "isAtack";
-
-    public virtual void Atack()
+    public class MasterGun : MonoBehaviour
     {
+        protected string boolAtackTriger = "isAtack";
+
+        public virtual void Attack()
+        {
+
+        }
+        public virtual void StopAttack()
+        {
+
+        }
 
     }
-    public virtual void StopAtack()
-    {
-
-    }
-
 }

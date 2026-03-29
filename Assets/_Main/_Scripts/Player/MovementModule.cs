@@ -1,42 +1,49 @@
 using UnityEngine;
 
-public class MovementModule : MonoBehaviour, IModule
+namespace _Main._Scripts.Player
 {
-    [Header("Movement Value")]
-    [SerializeField] private float _speed;
+    [RequireComponent(typeof(Rigidbody2D))]
+    public class MovementModule : MonoBehaviour, IModule
+    {
+        [Header("Movement Value")]
+        [SerializeField] private float _speed;
     
-    [Header("Components")]
-    [SerializeField] private Rigidbody2D _rb;
+        [Header("Components")]
+        [SerializeField] private Rigidbody2D _rb;
     
-    private void Start()
-    {
-        if (!GlodalInputs.CheckStatus()) GlodalInputs.Init();
+        private void Start()
+        {
+            _rb = GetComponent<Rigidbody2D>();
 
-        _rb = GetComponent<Rigidbody2D>();
-    }
+            if (!GlodalInputs.CheckStatus()) GlodalInputs.Init();
+            
+            
+        }
 
-    private void FixedUpdate()
-    {
-        Move();
-    }
+        private void FixedUpdate()
+        {
+            MovePlayer();
+        }
 
-    private void Move()
-    {
-        var direction = GlodalInputs.GetInput().Player.Move.ReadValue<Vector2>();
-        _rb.linearVelocity = new Vector2(_speed * direction.x, _speed * direction.y);
-    }
+        private void MovePlayer()
+        {
+            var direction = GlodalInputs.GetInput().Player.Move.ReadValue<Vector2>();
+            _rb.linearVelocity = new Vector2(_speed * direction.x, _speed * direction.y);
+        }
 
-    public void Disable()
-    {
-        this.Disable();
-    }
+        public void Disable()
+        {
+            this.enabled = false;
+        }
 
-    public void Enable()
-    {
-        this.Enable();
-    }
-    void OnDestroy()
-    {
-        GlodalInputs.Remove();
+        public void Enable()
+        {
+            this.enabled = true;
+        }
+        void OnDestroy()
+        {
+            if(GlodalInputs.CheckStatus())
+                GlodalInputs.Remove();
+        }
     }
 }

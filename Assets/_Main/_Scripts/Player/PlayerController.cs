@@ -1,16 +1,17 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+namespace _Main._Scripts.Player
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public class PlayerController : MonoBehaviour
     {
-        
-    }
+        public IReadOnlyCollection<IModule> Modules => _modules;
+        private List<IModule> _modules = new List<IModule>();
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        private void Awake()
+        {
+            _modules.AddRange(GetComponentsInChildren<IModule>());
+        }
     }
 }

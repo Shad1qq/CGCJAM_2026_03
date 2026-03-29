@@ -1,37 +1,41 @@
+using _Main._Scripts.Player.Guns;
 using UnityEngine;
 
-public class GunConponent : MonoBehaviour
+namespace _Main._Scripts.Player
 {
-    private MasterGun inHandsGun;
-
-    [Header("Value")]
-    [SerializeField] private Transform parentGun;
-
-    [Header("Tests")]
-    public MasterGun prefab;
-
-    private void Start()
+    public class GunConponent : MonoBehaviour
     {
-        SetGun(prefab);
+        private MasterGun inHandsGun;
 
-        if (!GlodalInputs.CheckStatus()) GlodalInputs.Init();
+        [Header("Value")]
+        [SerializeField] private Transform parentGun;
 
-        GlodalInputs.GetInput().Player.Attack.started += i => inHandsGun?.Atack();
-        GlodalInputs.GetInput().Player.Attack.canceled += i => inHandsGun?.StopAtack();
+        [Header("Tests")]
+        public MasterGun prefab;
 
-    }
-    public MasterGun GetGun()
-    {
-        return inHandsGun;
-    }
-    public Transform GetGunParent()
-    {
-        return parentGun;
-    }
+        private void Start()
+        {
+            SetGun(prefab);
 
-    public void SetGun(MasterGun gun)
-    {
-        Destroy(inHandsGun);
-        inHandsGun = Instantiate(gun, parentGun);
+            if (!GlodalInputs.CheckStatus()) GlodalInputs.Init();
+
+            GlodalInputs.GetInput().Player.Attack.started += i => inHandsGun?.Attack();
+            GlodalInputs.GetInput().Player.Attack.canceled += i => inHandsGun?.StopAttack();
+
+        }
+        public MasterGun GetGun()
+        {
+            return inHandsGun;
+        }
+        public Transform GetGunParent()
+        {
+            return parentGun;
+        }
+
+        public void SetGun(MasterGun gun)
+        {
+            Destroy(inHandsGun);
+            inHandsGun = Instantiate(gun, parentGun);
+        }
     }
 }

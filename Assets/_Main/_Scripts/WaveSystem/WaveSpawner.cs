@@ -1,14 +1,16 @@
 ﻿using Cysharp.Threading.Tasks;
-using JetBrains.Annotations;
 using UnityEngine;
 
-public class WaveSpawner
+namespace _Main._Scripts.WaveSystem
 {
-    public async UniTask<GameObject> SpawnEnemy(Transform[] areaPoints, GameObject[] objectsToSpawn)
+    public class WaveSpawner
     {
-        Transform currentPoint = areaPoints[Random.Range(0, areaPoints.Length-1)];
-        GameObject objectToSpawn = objectsToSpawn[Random.Range(0, objectsToSpawn.Length-1)]; 
+        public async UniTask<Enemyl.Enemy> SpawnEnemy(Transform[] areaPoints, GameObject prefab)
+        {
+            Random.InitState((int)Time.time);
+            Transform currentPoint = areaPoints[Random.Range(0, areaPoints.Length-1)];
         
-        return Object.Instantiate(objectToSpawn, currentPoint.position, Quaternion.identity);
+            return Object.Instantiate(prefab, currentPoint.position, Quaternion.identity).GetComponent<Enemyl.Enemy>();
+        }
     }
 }
